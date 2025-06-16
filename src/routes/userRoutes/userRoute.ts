@@ -26,6 +26,19 @@ router.get('/user/events/:category',userLoginController.getCategoryTypeDetails);
 router.post('/post/handleLike', eventBookingController.handleLikeForPost);
 router.get('/post/handleDetails/:postId',eventBookingController.getPostDetails);
 router.get('/post/getSelectEvent/:id',eventBookingController.getSelectedEventDetails);
+router.post('/post/create-checkout-session',eventBookingController.makePaymentStripe);
+router.post('/retryPayment-checkout-session',eventBookingController.makerRetryPayment);
+
+router.get('/post/getSelectedEventData/:postId',eventBookingController.getAnEventDetails);
+router.get('/post/getAllEventData',userLoginController.getAllEventDetails);
+router.get('/generateOtpForResetPassword/:userId',userLoginController.generateOtpForPassword);
+router.post('/verifyOtpForPassword',userLoginController.verifyOtpForPassword);
+router.post('/handleResetPassword',userLoginController.handleResetPassword);
+
+
+
+
+
 
 
 

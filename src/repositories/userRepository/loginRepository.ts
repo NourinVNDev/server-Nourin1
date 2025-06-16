@@ -3,9 +3,10 @@ import { FormData,User } from "../../dtos/user.dto";
 import USERDB from "../../models/userModels/userSchema";
 import bcrypt from 'bcrypt'
 import CATEGORYDB from "../../models/adminModels/adminCategorySchema";
-import OFFERDB from "../../models/adminModels/adminOfferSchema";
 import { eventLocation } from "../../dtos/user.dto";
 import { IUserLoginRepo } from "../../interfaces/userInterfaces/repositoryInterfaces/IUserLoginRepo";
+import ADMINOFFER from "../../models/adminModels/adminOfferSchema";
+import MANAGEROFFER from "../../models/managerModels/managerOfferSchema";
 const hashPassword = async (password:string) => {
   try {
       // Generate a salt
@@ -65,7 +66,7 @@ export class UserLoginRepository implements IUserLoginRepo{
     
     console.log(categoryNames);
 
-    const offers = await OFFERDB.find({ endDate: { $lt: new Date() } });
+    const offers = await ADMINOFFER.find({ endDate: { $lt: new Date() } });
 
     for (const offer of offers) {
       const socialEvents = await SOCIALEVENT.find({ adminOffer: offer._id });
@@ -79,7 +80,7 @@ export class UserLoginRepository implements IUserLoginRepo{
     
         await event.save();
     
-        await OFFERDB.updateOne(
+        await ADMINOFFER.updateOne(
           { _id: offer._id },
           { $pull: { Events: event._id } }
         );
@@ -391,6 +392,98 @@ async resetPasswordRepo(email: string, formData:FormData){
     return {
       success: false,
       message: 'An error occurred during password reset.',
+      user: null,
+    };
+  }
+}
+async getAllEventBasedRepo(): Promise<any> {
+  try {
+    const eventData = await SOCIALEVENT.find();
+    const updatedEvents: any[] = [];
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    for (const event of eventData) {
+      const eventStartDate = new Date(event.startDate);
+      eventStartDate.setHours(0, 0, 0, 0);
+
+      if (eventStartDate >= today) {
+        const category = await CATEGORYDB.findOne({ categoryName: event.title });
+
+        if (category && category.isListed) {
+          console.log("Title",event.eventName,category.categoryName);
+          
+          // Fetch active manager offer for the event
+
+          console.log("MaNaGeR",await MANAGEROFFER.find());
+          
+          const managerOffer = await MANAGEROFFER.findOne({
+            discount_on: event.eventName,
+            startDate: { $lte: today },
+            endDate: { $gte: today },
+          });
+          console.log("ManagerOffer",managerOffer); 
+          // Fetch active admin offer for the category
+
+     
+          
+          const adminOffer = await ADMINOFFER.findOne({
+            discount_on: category.categoryName,
+            startDate: { $lte: today },
+            endDate: { $gte: today },
+          });
+
+          console.log("AdminOffer",adminOffer);
+          
+
+          updatedEvents.push({
+            ...event.toObject(),
+            managerOffer1: managerOffer || null,
+            adminOffer1: adminOffer || null,
+          });
+        }
+      }
+    }
+
+    return {
+      success: true,
+      message: "Event Details with Offers retrieved successfully.",
+      events: updatedEvents,
+    } as const;
+  } catch (error) {
+    console.error("Error retrieving event and offer details:", error);
+    return {
+      success: false,
+      message: "An error occurred while retrieving event and offer data.",
+      events: [],
+    } as const;
+  }
+}
+
+async fetchuserEmail(userId:string){
+  try {
+    const user = await USERDB.findById(userId);
+
+    if (!user) {
+      console.log('User not found.');
+      return {
+        success: false,
+        message: 'User not found.',
+        user: null,
+      };
+    }
+    return {
+      success: true,
+      message: 'Login successful.',
+      user:user.email,
+    };
+    
+  } catch (error) {
+    console.error('Error during login:', error);
+    return {
+      success: false,
+      message: 'An error occurred during login.',
       user: null,
     };
   }

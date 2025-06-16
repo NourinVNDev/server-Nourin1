@@ -12,4 +12,6 @@ googleAuthData(payload:Object):Promise<{success:boolean,message:string,user:any}
     getUserDetailsRepository(userId:string):Promise<{success:boolean,message:string,user?:any,category?:any}>//2
  resetUserProfile(email:string,formData:FormData,location:eventLocation|null):Promise<{success:boolean,message:string,user:any}>//4
     resetPasswordRepo(email:string,formData:FormData):Promise<{success:boolean,message:string,user:any}>;//4
+        getAllEventBasedRepo():Promise<{success:boolean,message:string,category:any[]}>
+            fetchuserEmail(userId:string):Promise<{success:boolean,message:string,user:any}>
 }

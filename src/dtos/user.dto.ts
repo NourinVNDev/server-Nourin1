@@ -1,4 +1,5 @@
 import session from "express-session";
+import { Document } from "mongoose";
 
 export type FormData={ [key: string]: string|any };
 export type FormData1={[key:string]:number};
@@ -46,6 +47,26 @@ export type EventSeatDetails={
   typesOfTickets:string
 
 }[];
+interface BookedUser {
+  email: string;
+  user: string;
+}
+export interface BookingData {
+  data: {
+    bookedUser: BookedUser[];
+    totalAmount: number;
+    NoOfPerson: number;
+    bookingId: string;
+    bookingDate: string;
+  };
+}
+export interface EventDocument extends Document {
+    offer: any;
+    endDate: Date;
+    title: string;
+    startDate:string;
+
+}
 
 
 export type verifierFormData={

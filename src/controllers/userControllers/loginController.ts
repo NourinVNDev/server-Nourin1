@@ -473,6 +473,97 @@ export class UserLoginController{
       }
   }
 
+  async getAllEventDetails(req: Request, res: Response): Promise<void|any> {
+
+  
+  try {
+      const result = await this._userLoginService.getAllEventService();
+      console.log("Result",result);
+
+      if (!result.success) {
+          return res.status(HTTP_statusCode.InternalServerError).json({
+              message: result.message
+          });
+      }
+
+      res.status(HTTP_statusCode.OK).json({
+          message: response_message.GETMANAGERPROFILEDETAILS_SUCCESS,
+          data: result  
+      });
+
+  } catch (error) {
+      console.error("Error in getCategoryDetails:", error);
+      res.status(HTTP_statusCode.InternalServerError).json({ message: response_message.FETCHADMINDASHBOARDDATA_ERROR, error });
+  }
+}
+    async generateOtpForPassword(req: Request, res: Response): Promise<void>{
+
+      
+      try {
+          const userId = req.params.userId;
+
+          const otpNumber = await this._userLoginService.generateOtpService(userId);
+      
+           if (typeof otpNumber.success === 'boolean') {
+            // Handle the case where otpNumber is a boolean
+            console.error("Received a boolean value instead of a number:", otpNumber);
+            res.status(HTTP_statusCode.BadRequest).json({ error: response_message.MANAGERREGISTER_FAILED });
+            return;
+        } else if(typeof otpNumber.success==='number') {
+          console.log("check otp",globalOTP);
+          
+            globalOTP = otpNumber.success; // If it's already a number
+        }
+        console.log('Checking',otpNumber);
+        console.log("Hash",globalOTP);
+        
+
+          res.status(HTTP_statusCode.OK).json({ message: response_message.MANAGERREGISTER_SUCCESS, otpData: otpNumber });
+      } catch (error) {
+          console.error("Error saving user data:", error);
+          res.status(HTTP_statusCode.InternalServerError).json({ error: response_message.MANAGERREGISTER_ERROR });
+      }
+  }
+    async verifyOtpForPassword(req: Request, res: Response): Promise<void>{
+    try{
+      
+      const {otp} = req.body;
+      console.log("Check the Otp",otp);
+      console.log("Received OTP:", otp, "Global OTP:", globalOTP);
+      const result=this._userLoginService.verifyOtpCheckingService(otp,globalOTP);
+      if((await result).success){
+        res.status(HTTP_statusCode.OK).json({ message: response_message.VERIFYOTPFORPASSWORD_SUCCESS});
+      }else{
+        res.status(HTTP_statusCode.BadRequest).json({ message: response_message.VERIFYOTPFORPASSWORD_FAILED });
+      }
+    
+    } catch (error) {
+        console.error("Error saving user data:", error);
+        res.status(HTTP_statusCode.InternalServerError).json({ error: response_message.MANAGERREGISTER_ERROR });
+    }
+
+  }
+
+    async handleResetPassword(req: Request, res: Response): Promise<void>{
+    try {
+      console.log("Body",req.body);
+      const password=req.body.password;
+      const password1=req.body.confirmPassword;
+     const formData={'password':password,'password1':password1};
+     console.log("here",formData);
+     
+     const userId=req.body.userId;
+     console.log(req.body);
+     console.log(userId);
+     
+    let result= this._userLoginService.resetPasswordDetails(formData,userId);
+     res.status(HTTP_statusCode.OK).json({ message:response_message.MANAGERRESETPASSWORD_SUCCESS ,data:(await result).user});
+
+    } catch (error) {
+        res.status(HTTP_statusCode.InternalServerError).json({ error: response_message.CREATEADMINDATA_ERROR });
+    }
+}
+
 
 
 

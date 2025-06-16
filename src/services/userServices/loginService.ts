@@ -17,7 +17,7 @@ export class UserLoginService implements IUserLoginService{
         @inject(TYPES.IUserLoginRepo) private _userLoginRepo:IUserLoginRepo
     ){}
 
-      async getAllEventService(): Promise<{ success: boolean; message: string; data: any[] }> {
+      async getAllEventService() {
     try {
       const result = await this._userLoginRepo.getEventDataRepo();
       return { success: true, message: result.message, data: result.data };
@@ -285,6 +285,60 @@ async resetPasswordDetails(formData: FormData,email:string){
     throw new Error('Error verifying login credentials');
   }
 }
+async getAllEventServiice(){
+  try {
+
+      
+      const result = await this._userLoginRepo.getAllEventBasedRepo();
+      return { success: true, message: 'Retriving all event Data', user: result };
+ 
+  } catch (error) {
+    console.error(
+      `Error in loginDetails:`,
+      error instanceof Error ? error.message : error
+    );
+    throw new Error('Error verifying login credentials');
+  }
+
+}
+  async generateOtpService(userId: string){
+    try {
+      if (!userId) {
+        throw new Error('UserId not provided');
+      }
+
+    
+
+      console.log('Email is not registered');
+      const otp = generateOTP();
+      const userData=await this._userLoginRepo.fetchuserEmail(userId)
+      console.log('Generated OTP:', otp);
+      GenerateOTP(userData.user as string, otp);
+      return { success: Number(otp) };
+    } catch (error) {
+      console.error(
+        `Error in CheckingEmail service for email `,
+        error instanceof Error ? error.message : error
+      );
+      throw new Error('Error checking email');
+    }
+  }
+  async verifyOtpCheckingService(otp: string, globalOTP: string | number | null ){
+    try {
+      if (globalOTP !== null && parseInt(otp, 10) === globalOTP) {
+       
+        return { success: true, message: 'Otp are Matched'};
+      } else {
+        return { success: false, message: 'Otp are not Matched'};
+      }
+    } catch (error) {
+      console.error(
+        `Error in verifyService:`,
+        error instanceof Error ? error.message : error
+      );
+      throw new Error('Error verifying OTP or saving user data');
+    }
+  }
 
 
 

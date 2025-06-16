@@ -13,6 +13,10 @@ verifyService(formData:FormData,otp:string,globalOTP:string|number|null):Promise
     getUserProfileDetailsService(userId:string):Promise<{success:boolean,message:string,user:any}>;//3
     changeUserProfileService(formData:FormData,email:string):Promise<{success:boolean,message:string,user:any}>;//2
    resetPasswordDetails(formData:FormData,userId:string):Promise<{success:boolean,message:string,user:any}>;//5
+       getAllEventService():Promise<{success:boolean,message:string,data:any}>;
+           generateOtpService(userId:string):Promise<{success:number}>;
+               verifyOtpCheckingService(otp:string,globalOTP:string|number|null):Promise<{success:boolean,message:string}>
+               
 
 
 
