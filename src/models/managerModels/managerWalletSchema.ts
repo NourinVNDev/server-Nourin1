@@ -1,5 +1,6 @@
     import mongoose ,{Schema} from "mongoose";
 import { eventNames } from "process";
+import { IManagerWallet } from "../../dtos/user.dto";
     const ManagerWalletSchema = new mongoose.Schema({
         managerId: {
             type: Schema.Types.ObjectId,

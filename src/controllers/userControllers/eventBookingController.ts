@@ -172,4 +172,104 @@ async makerRetryPayment(req:Request,res:Response){
         res.status(HTTP_statusCode.InternalServerError).json({ message: response_message.FETCHADMINDASHBOARDDATA_ERROR, error });
     }
 }
+
+async saveBillingDetails(req: Request, res: Response) {
+  try {
+    const formData = req.body;
+    console.log("Received billing details:", formData);
+
+    const result = await this._eventBookingService.saveBillingDetailsService(formData);
+    console.log("Nice",result.data)
+
+    res.status(HTTP_statusCode.OK).json(result);
+  } catch (error) {
+    console.error("Error in saveBillingDetails:", error);
+    res.status(HTTP_statusCode.InternalServerError).json({ success: false, message: response_message.FETCHADMINDASHBOARDDATA_ERROR});
+  }
+}
+async saveRetryBillingDetails(req:Request,res:Response){
+    try {
+    const formData = req.body;
+    console.log("Received  Retry billing details:", formData);
+
+    const result = await this._eventBookingService.saveRetryBillingService(formData);
+  
+
+    res.status(HTTP_statusCode.OK).json(result);
+  } catch (error) {
+    console.error("Error in saveBillingDetails:", error);
+    res.status(HTTP_statusCode.InternalServerError).json({ success: false, message: response_message.FETCHADMINDASHBOARDDATA_ERROR});
+  }
+}
+
+async updateBookedEventPaymentStatus(req:Request,res:Response){
+  try {
+    console.log("Hello from controller");
+    
+    const bookedId=req.params.bookedId;
+    console.log("Updating payment status of booked Event:", bookedId);
+
+    const result = await this._eventBookingService.updatePaymentStatusService(bookedId);
+    if(result){
+      console.log("Nice",result)
+
+      res.status(HTTP_statusCode.OK).json(result); 
+    }
+
+  } catch (error) {
+    console.error("Error in saveBillingDetails:", error);
+    res.status(HTTP_statusCode.InternalServerError).json({ success: false, message: response_message.FETCHADMINDASHBOARDDATA_ERROR });
+  }
+}
+async fetchSavedBookingdata(req:Request,res:Response){
+  try {
+    const bookingId=req.params.bookingId;
+      const result = await this._eventBookingService.getBookedEventService(bookingId); 
+      if (!result) {
+           res.status(HTTP_statusCode.InternalServerError).json({
+              message:response_message.ADMINLOGIN_ERROR
+          });
+      }
+
+      res.status(HTTP_statusCode.OK).json({
+          message: response_message.GETPOSTDETAILS_SUCCESS,
+          data: result
+      });
+
+  } catch (error) {
+      console.error("Error in get selected event:", error);
+      res.status(HTTP_statusCode.InternalServerError).json({ message: response_message.FETCHADMINDASHBOARDDATA_ERROR, error });
+  }
+}
+
+async checkIfUserValid(req:Request,res:Response){
+  console.log("aaa",req.params);
+  
+    try {
+      console.log("Yeah",req.params);
+      
+    const email=req.params.email;
+    const eventName=req.params.eventName;
+    const bookedId=req.params.bookedId;
+    console.log("Email,EventName",email,eventName);
+      const result = await this._eventBookingService.checkBookedUserValidService(email,eventName,bookedId); 
+      if (!result) {
+           res.status(HTTP_statusCode.InternalServerError).json({
+              message:response_message.ADMINLOGIN_ERROR
+          });
+      }
+
+      res.status(HTTP_statusCode.OK).json({
+          message:response_message.GETPOSTDETAILS_SUCCESS,
+          data: result
+      });
+
+  } catch (error) {
+      console.error("Error in get selected event:", error);
+      res.status(HTTP_statusCode.InternalServerError).json({ message: response_message.FETCHADMINDASHBOARDDATA_ERROR, error });
+  }
+
+}
+
+
 }

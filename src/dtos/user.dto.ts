@@ -1,5 +1,23 @@
 import session from "express-session";
-import { Document } from "mongoose";
+import mongoose, { Schema, Document, Types } from "mongoose";
+
+interface IManagerTransaction {
+  userId: Types.ObjectId;
+  managerAmount: number;
+  type: "credit" | "debit" | "transfer";
+  status?: "pending" | "completed" | "failed";
+  createdAt?: Date;
+  eventName?: string;
+  bookedId?: string;
+  noOfPerson?: number;
+}
+
+export interface IManagerWallet extends Document {
+  managerId: Types.ObjectId;
+  balance: number;
+  currency: string;
+  transactions: IManagerTransaction[];
+}
 
 export type FormData={ [key: string]: string|any };
 export type FormData1={[key:string]:number};
@@ -66,6 +84,28 @@ export interface EventDocument extends Document {
     title: string;
     startDate:string;
 
+}
+
+export interface EventDetails {
+  eventName: string;
+  startDate: string;
+  endDate: string;
+  time: string;
+}
+
+export interface ManagerWallet {
+  balance: number;
+  transactions: {
+    userId: mongoose.Types.ObjectId;
+    managerAmount: number;
+    type: string;
+    status: string;
+    createdAt: Date;
+    eventName: string;
+    bookedId: string;
+    companyName: string;
+    noOfPerson: number;
+  }[];
 }
 
 

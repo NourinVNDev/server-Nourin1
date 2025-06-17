@@ -3,7 +3,7 @@ import TYPES from "../../inversify/types";
 import Stripe from "stripe";
 import { IEventBookingRepo } from "../../interfaces/userInterfaces/repositoryInterfaces/IEventBookingRepo";
 import { IEventBookingService } from "../../interfaces/userInterfaces/serviceInterfaces/IEventBookingService";
-import { PaymentData, retryPayment } from "../../dtos/user.dto";
+import { billingData, PaymentData, retryBillingData, retryPayment } from "../../dtos/user.dto";
 const Stripe_Secret = process.env.STRIPE_SERVER_SECRET
 if (!Stripe_Secret) {
     throw new Error("Stripe Secret from .env file not found!")
@@ -230,6 +230,59 @@ async getCategoryBasedService(postId:string){
     );
     throw new Error('Error verifying login credentials');
   }
+}
+async saveBillingDetailsService(formData:billingData){
+  try {
+
+    const result = await this._eventBookingRepo.saveBillingDetailsRepo(formData);
+    console.log("from service", result);
+    return {success:result.success,message:result.message,data:result.data};
+  } catch (error) {
+
+    console.error("Error in getAllOfferServiceDetails:", error);
+    throw new Error("Failed to create event in another service layer."); 
+  }
+}
+async saveRetryBillingService(formData:retryBillingData){
+    try {
+
+    const result = await this._eventBookingRepo.saveRetryBillingRepo(formData);
+    console.log("from service", result);
+    return {success:result.success,message:result.message,data:result.data};
+  } catch (error) {
+
+    console.error("Error in getAllOfferServiceDetails:", error);
+    throw new Error("Failed to create event in another service layer."); 
+  }
+}
+async updatePaymentStatusService(bookedId:string){
+  try {
+    // Fetch data from the repository
+    const result = await this._eventBookingRepo.updatePaymentStatusRepo(bookedId);
+    console.log("from service", result);
+    if(result){
+      return {success:result.success,message:result.message};
+    }
+
+  } catch (error) {
+    // Log and return a generic error response
+    console.error("Error in getAllOfferServiceDetails:", error);
+    throw new Error("Failed to create event in another service layer."); 
+  }
+}
+async checkBookedUserValidService(email:string,eventName:string,bookedId:string){
+  try {
+
+    const result = await this._eventBookingRepo.checkUserBookingValidRepo(email,eventName,bookedId);
+    console.log("from service", result);
+
+return {result};
+  } catch (error) {
+
+    console.error("Error in getAllOfferServiceDetails:", error);
+    throw new Error("Failed to create event in another service layer."); 
+  }
+
 }
 
 }

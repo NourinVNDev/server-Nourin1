@@ -21,6 +21,16 @@ import { IUserProfileService } from "../interfaces/userInterfaces/serviceInterfa
 import { IUserProfileRepo } from "../interfaces/userInterfaces/repositoryInterfaces/IUserProfileRepo";
 import { UserProfileRepository } from "../repositories/userRepository/userProfileRepository";
 import { UserProfileController } from "../controllers/userControllers/userProfileController";
+import { IRetryEventService } from "../interfaces/userInterfaces/serviceInterfaces/IRetryEventPaymentService";
+import { RetryEventPaymentService } from "../services/userServices/retryPendingEventService";
+import { IRetryEventRepo } from "../interfaces/userInterfaces/repositoryInterfaces/IRetryEventPaymentRepo";
+import { RetryEventPaymentRepo } from "../repositories/userRepository/retryPendingEventRepository";
+import { RetryEventPaymentController } from "../controllers/userControllers/retryPendingEventController";
+import { INotificationVideoCallService } from "../interfaces/userInterfaces/serviceInterfaces/INotificationVideoCallService";
+import { NotificationVideoCallService } from "../services/userServices/notificationVideoCallService";
+import { INotificationVideoCallRepo } from "../interfaces/userInterfaces/repositoryInterfaces/INotificationVideoCallRepo";
+import { NOtificationVideoCallRepository } from "../repositories/userRepository/notificationVideoCallRepository";
+import { NotificationVideoCallController } from "../controllers/userControllers/notificationVideoCallController";
 //user
 container.bind<IUserLoginService>(TYPES.IUserLoginService).to(UserLoginService);
 container.bind<IUserLoginRepo>(TYPES.IUserLoginRepo).to(UserLoginRepository);
@@ -37,6 +47,15 @@ container.bind<StripePaymentController>(StripePaymentController).toSelf();
 container.bind<IUserProfileService>(TYPES.IUserProfileService).to(UserProfileService);
 container.bind<IUserProfileRepo>(TYPES.IUserProfileRepo).to(UserProfileRepository);
 container.bind<UserProfileController>(UserProfileController).toSelf();
+
+container.bind<IRetryEventService>(TYPES.IRetryEventService).to(RetryEventPaymentService);
+container.bind<IRetryEventRepo>(TYPES.IRetryEventRepo).to(RetryEventPaymentRepo);
+container.bind<RetryEventPaymentController>(RetryEventPaymentController).toSelf();
+
+container.bind<INotificationVideoCallService>(TYPES.INotificationVideoCallService).to(NotificationVideoCallService);
+container.bind<INotificationVideoCallRepo>(TYPES.INotificationVideoCallRepo).to(NOtificationVideoCallRepository);
+container.bind<NotificationVideoCallController>(NotificationVideoCallController).toSelf();
+
 
 
 

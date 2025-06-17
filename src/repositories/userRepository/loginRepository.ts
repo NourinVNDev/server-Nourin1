@@ -488,6 +488,33 @@ async fetchuserEmail(userId:string){
     };
   }
 }
+async checkOfferAvailableRepo(categoryName: string) {
+  try {
+    const savedEvent = await ADMINOFFER.findOne({ discount_on: categoryName });
+    if (!savedEvent) {
+      return {
+        success: false,
+        message: "No Offers Available",
+        data: [],
+      };
+    }
+
+    // Check if the offer is still valid (endDate is in the future)
+    const currentDate = new Date();
+    if (new Date(savedEvent.endDate) < currentDate) {
+      return {
+        success: false,
+        message: "Offer has expired",
+        data: [],
+      };
+    }
+
+    return { success: true, message: "Offers Found", data: savedEvent };
+  } catch (error) {
+    console.error("Error in checkOfferAvailableRepo:", error);
+    throw new Error("Failed to handle event data in main repository.");
+  }
+}
 
 
 

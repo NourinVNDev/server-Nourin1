@@ -339,6 +339,16 @@ async getAllEventServiice(){
       throw new Error('Error verifying OTP or saving user data');
     }
   }
+  async checkOfferAvailableService(categoryName:string){
+  try {
+    const savedEvent = await this._userLoginRepo.checkOfferAvailableRepo(categoryName);
+    return {success:savedEvent.success,message:savedEvent.message,data:savedEvent.data};
+  } catch (error) {
+    console.error("Error in getAllOfferServiceDetails:", error);
+    throw new Error("Failed to create event in another service layer."); 
+  }
+
+}
 
 
 

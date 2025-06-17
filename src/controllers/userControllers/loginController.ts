@@ -564,6 +564,25 @@ export class UserLoginController{
     }
 }
 
+async checkOfferAvailable(req:Request,res:Response){
+  try {
+    const categoryName=req.params.category;
+
+    console.log("Chech the cat",categoryName);
+
+    const savedEvent = await this._userLoginService.checkOfferAvailableService(categoryName);
+    if(savedEvent.success){
+      res.status(HTTP_statusCode.OK).json({ success: savedEvent.success, message: savedEvent.message, data: savedEvent.data });
+      return;
+      }
+       res.status(HTTP_statusCode.NotFound).json({ success: savedEvent.success, message: savedEvent.message, data: savedEvent.data });
+  } catch (error) {
+    console.error("Error in check Offer Available:", error);
+    res.status(HTTP_statusCode.InternalServerError).json({ success: false, message: response_message.FETCHADMINDASHBOARDDATA_ERROR });
+    
+  }
+}
+
 
 
 

@@ -11,6 +11,12 @@ const TYPES = {
   IUserProfileService:Symbol.for('IUserProfileService'),
   IUserProfileRepo:Symbol.for('IUserProfileRepo'),
 
+  IRetryEventService:Symbol.for('IRetryEventService'),
+  IRetryEventRepo:Symbol.for('IRetryEventRepo'),
+
+  INotificationVideoCallService:Symbol.for('INotificationVideoCallService'),
+  INotificationVideoCallRepo:Symbol.for('INotificationVideoCallRepo'),
+
 };
 
 export default TYPES;
