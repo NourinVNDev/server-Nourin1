@@ -31,6 +31,16 @@ import { NotificationVideoCallService } from "../services/userServices/notificat
 import { INotificationVideoCallRepo } from "../interfaces/userInterfaces/repositoryInterfaces/INotificationVideoCallRepo";
 import { NOtificationVideoCallRepository } from "../repositories/userRepository/notificationVideoCallRepository";
 import { NotificationVideoCallController } from "../controllers/userControllers/notificationVideoCallController";
+import { IMultiVerifierService } from "../interfaces/verifierInterfaces/serviceInterfaces/IMultiVerifierService";
+import { MultiVerifierService } from "../services/verifierServices/multiVerifierService";
+import { IMultiVerifierRepo } from "../interfaces/verifierInterfaces/repositoryInterfaces/IMultiVerifierRepo";
+import { MultiVerifierRepo } from "../repositories/verifierRepository/multiVerifierRepository";
+import { MultiVerifierController } from "../controllers/verifierControllers/multiVerifierController";
+import { IAdminLoginService } from "../interfaces/adminInterfaces/serviceInterfaces/adminLoginService";
+import { AdminLoginService } from "../services/adminServices/adminLoginService";
+import { IAdminLoginRepo } from "../interfaces/adminInterfaces/repositoryInterfaces/adminLoginRepo";
+import { AdminLoginRepository } from "../repositories/adminRepository/adminLoginRepository";
+import { AdminLoginController } from "../controllers/adminControllers/loginController";
 //user
 container.bind<IUserLoginService>(TYPES.IUserLoginService).to(UserLoginService);
 container.bind<IUserLoginRepo>(TYPES.IUserLoginRepo).to(UserLoginRepository);
@@ -56,6 +66,15 @@ container.bind<INotificationVideoCallService>(TYPES.INotificationVideoCallServic
 container.bind<INotificationVideoCallRepo>(TYPES.INotificationVideoCallRepo).to(NOtificationVideoCallRepository);
 container.bind<NotificationVideoCallController>(NotificationVideoCallController).toSelf();
 
+//verifier
+container.bind<IMultiVerifierService>(TYPES.IMultiVerifierService).to((MultiVerifierService));
+container.bind<IMultiVerifierRepo>(TYPES.IMultiVerifierRepo).to(MultiVerifierRepo);
+container.bind<MultiVerifierController>(MultiVerifierController).toSelf();
+
+//admin
+container.bind<IAdminLoginService>(TYPES.IAdminLoginService).to(AdminLoginService);
+container.bind<IAdminLoginRepo>(TYPES.IAdminLoginRepo).to(AdminLoginRepository);
+container.bind<AdminLoginController>(AdminLoginController).toSelf();
 
 
 

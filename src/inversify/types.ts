@@ -1,4 +1,5 @@
 const TYPES = {
+  //user
   IUserLoginRepo: Symbol.for("IUserLoginRepo"),
   IUserLoginService: Symbol.for("IUserLoginService"),
 
@@ -16,6 +17,15 @@ const TYPES = {
 
   INotificationVideoCallService:Symbol.for('INotificationVideoCallService'),
   INotificationVideoCallRepo:Symbol.for('INotificationVideoCallRepo'),
+
+  //verifier
+  IMultiVerifierService:Symbol.for('IMultiVerifierService'),
+  IMultiVerifierRepo:Symbol.for('IMultiVerifierRepo'),
+
+  //admin
+  IAdminLoginService:Symbol.for('IAdminLoginService'),
+  IAdminLoginRepo:Symbol.for('IAdminLoginRepo'),
+  
 
 };
 
