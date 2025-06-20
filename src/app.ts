@@ -3,8 +3,8 @@ import cors from "cors";
 import morgan from 'morgan';
 import verifierRoute from "./routes/verifierRoutes/verifierRoute";
 import userRoute from "./routes/userRoutes/userRoute";
-// import managerRoute from './routes/managerRoutes/managerRoute';
-// import adminRoute from './routes/adminRoutes/adminRoute';
+import managerRoute from './routes/managerRoutes/managerRoute';
+import adminRoute from './routes/adminRoutes/adminRoute';
 import session  from 'express-session';
 import Database from "./config/db.config";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
@@ -52,8 +52,8 @@ app.use(
 
 //for Socket io
 app.use('/api/user' ,userRoute);
-// app.use('/api/manager/',managerRoute);
-// app.use('/api/admin/',adminRoute);
+app.use('/api/manager/',managerRoute);
+app.use('/api/admin/',adminRoute);
 app.use('/api/verifier/',verifierRoute);
 app.use(errorMiddleware);
 

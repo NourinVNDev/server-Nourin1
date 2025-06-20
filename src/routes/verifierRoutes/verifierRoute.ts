@@ -17,7 +17,7 @@ verifierRoute.get('/fetchBookedDetails/:eventId',verifyToken(['verifier']),verif
 verifierRoute.get('/fetchSingleUser/:bookedId/:userName',verifyToken(['verifier']),verifierController.getSingleUserData);
 verifierRoute.get('/markUserEntry/:bookedId/:userName',verifyToken(['verifier']),verifierController.markUserEntry);
 
-export default verifierRoute
+export default verifierRoute;
 
 
 

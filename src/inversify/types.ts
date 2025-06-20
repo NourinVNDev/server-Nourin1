@@ -25,7 +25,24 @@ const TYPES = {
   //admin
   IAdminLoginService:Symbol.for('IAdminLoginService'),
   IAdminLoginRepo:Symbol.for('IAdminLoginRepo'),
-  
+
+  IAdminCategoryService:Symbol.for('IAdminCategoryService'),
+  IAdminCategoryRepo:Symbol.for('IAdminCategoryRepo'),
+
+  IAdminOfferService:Symbol.for('IAdminOfferService'),
+  IAdminOfferRepo:Symbol.for('IAdminOfferRepo'),
+
+  //manager
+  IManagerLoginService:Symbol.for('IManagerLoginService'),
+  IManagerLoginRepo:Symbol.for('IManagerLoginRepo'),
+
+  IManagerEventService:Symbol.for('IManagerEventService'),
+  IManagerEventRepo:Symbol.for('IManagerEventRepo'),
+
+  IManagerOfferService:Symbol.for('IManagerOfferService'),
+  IManagerOfferRepo:Symbol.for('IManagerOfferRepo'),
+
+
 
 };
 

@@ -36,11 +36,36 @@ import { MultiVerifierService } from "../services/verifierServices/multiVerifier
 import { IMultiVerifierRepo } from "../interfaces/verifierInterfaces/repositoryInterfaces/IMultiVerifierRepo";
 import { MultiVerifierRepo } from "../repositories/verifierRepository/multiVerifierRepository";
 import { MultiVerifierController } from "../controllers/verifierControllers/multiVerifierController";
-import { IAdminLoginService } from "../interfaces/adminInterfaces/serviceInterfaces/adminLoginService";
+import { IAdminLoginService } from "../interfaces/adminInterfaces/serviceInterfaces/IAdminLoginService";
 import { AdminLoginService } from "../services/adminServices/adminLoginService";
-import { IAdminLoginRepo } from "../interfaces/adminInterfaces/repositoryInterfaces/adminLoginRepo";
+import { IAdminLoginRepo } from "../interfaces/adminInterfaces/repositoryInterfaces/IAdminLoginRepo";
 import { AdminLoginRepository } from "../repositories/adminRepository/adminLoginRepository";
 import { AdminLoginController } from "../controllers/adminControllers/loginController";
+import { IAdminCategoryService } from "../interfaces/adminInterfaces/serviceInterfaces/IAdminCategoryService";
+import { AdminCategoryService } from "../services/adminServices/adminCategoryService";
+import { IAdminCategoryRepo } from "../interfaces/adminInterfaces/repositoryInterfaces/IAdminCategoryRepo";
+import { AdminCategoryRepository } from "../repositories/adminRepository/adminCategoryRepository";
+import { AdminCategoryController } from "../controllers/adminControllers/categoryController";
+import { IAdminOfferService } from "../interfaces/adminInterfaces/serviceInterfaces/IAdminOfferService";
+import { AdminOfferService } from "../services/adminServices/adminOfferService";
+import { IAdminOfferRepo } from "../interfaces/adminInterfaces/repositoryInterfaces/IAdminOfferRepo";
+import { AdminOfferRepository } from "../repositories/adminRepository/adminOfferRepository";
+import { AdminOfferController } from "../controllers/adminControllers/offerController";
+import { IManagerLoginService } from "../interfaces/managerInterfaces/serviceInterfaces/IManagerLoginService";
+import { ManagerLoginService } from "../services/managerServices/ManagerloginService";
+import { IManagerLoginRepo } from "../interfaces/managerInterfaces/repositoryInterfaces/IManagerLoginRepo";
+import { ManagerLoginRepository } from "../repositories/managerRepository/managerLoginRepository";
+import { ManagerLoginController } from "../controllers/managerControllers/loginController";
+import { IManagerEventService } from "../interfaces/managerInterfaces/serviceInterfaces/IManagerEventService";
+import { ManagerEventService } from "../services/managerServices/managerEventService";
+import { IManagerEventRepo } from "../interfaces/managerInterfaces/repositoryInterfaces/IManagerEventRepo";
+import { ManagerEventRepository } from "../repositories/managerRepository/managerEventRepository";
+import { ManagerEventController } from "../controllers/managerControllers/eventController";
+import { IManagerOfferService } from "../interfaces/managerInterfaces/serviceInterfaces/IManagerOfferService";
+import { ManagerOfferService } from "../services/managerServices/managerOfferService";
+import { IManagerOfferRepo } from "../interfaces/managerInterfaces/repositoryInterfaces/IManagerOfferRepo";
+import { ManagerOfferRepository } from "../repositories/managerRepository/managerOfferRepository";
+import { ManagerOfferController } from "../controllers/managerControllers/offerController";
 //user
 container.bind<IUserLoginService>(TYPES.IUserLoginService).to(UserLoginService);
 container.bind<IUserLoginRepo>(TYPES.IUserLoginRepo).to(UserLoginRepository);
@@ -75,6 +100,30 @@ container.bind<MultiVerifierController>(MultiVerifierController).toSelf();
 container.bind<IAdminLoginService>(TYPES.IAdminLoginService).to(AdminLoginService);
 container.bind<IAdminLoginRepo>(TYPES.IAdminLoginRepo).to(AdminLoginRepository);
 container.bind<AdminLoginController>(AdminLoginController).toSelf();
+
+container.bind<IAdminCategoryService>(TYPES.IAdminCategoryService).to(AdminCategoryService);
+container.bind<IAdminCategoryRepo>(TYPES.IAdminCategoryRepo).to(AdminCategoryRepository);
+container.bind<AdminCategoryController>(AdminCategoryController).toSelf();
+
+container.bind<IAdminOfferService>(TYPES.IAdminOfferService).to(AdminOfferService);
+container.bind<IAdminOfferRepo>(TYPES.IAdminOfferRepo).to(AdminOfferRepository);
+container.bind<AdminOfferController>(AdminOfferController).toSelf();
+
+//manager
+container.bind<IManagerLoginService>(TYPES.IManagerLoginService).to(ManagerLoginService);
+container.bind<IManagerLoginRepo>(TYPES.IManagerLoginRepo).to(ManagerLoginRepository);
+container.bind<ManagerLoginController>(ManagerLoginController).toSelf();
+
+container.bind<IManagerEventService>(TYPES.IManagerEventService).to(ManagerEventService);
+container.bind<IManagerEventRepo>(TYPES.IManagerEventRepo).to(ManagerEventRepository);
+container.bind<ManagerEventController>(ManagerEventController).toSelf();
+
+container.bind<IManagerOfferService>(TYPES.IManagerOfferService).to(ManagerOfferService);
+container.bind<IManagerOfferRepo>(TYPES.IManagerOfferRepo).to(ManagerOfferRepository);
+container.bind<ManagerOfferController>(ManagerOfferController).toSelf();
+
+
+
 
 
 
