@@ -144,6 +144,25 @@ export class ManagerOfferController{
             
 
           }
+            async fetchManagerWallet(req:Request,res:Response){
+            try {
+  
+              const managerId=req.params.managerId;
+          
+              console.log("Chech the managerId",managerId);
+          
+              const savedEvent = await this._offerService.fetchManagerWalletService(managerId);
+              if(savedEvent.success){
+                res.status(HTTP_statusCode.OK).json({ success: savedEvent.success, message: savedEvent.message, data: savedEvent.data });
+                return;
+                }
+                 res.status(HTTP_statusCode.NoChange).json({ success: savedEvent.success, message: savedEvent.message, data: savedEvent.data });
+            } catch (error) {
+              console.error("Error in check  Manager Wallet:", error);
+              res.status(HTTP_statusCode.InternalServerError).json({ success: false, message: response_message.FETCHADMINDASHBOARDDATA_ERROR});
+              
+            }
+          }
 
 
 }

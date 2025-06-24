@@ -75,6 +75,19 @@ async getSelectedOfferService(offerId:string,managerId:string) {
     }
 
 }
+async fetchManagerWalletService(managerId:string){
+    try {
+            if (!managerId) {
+                throw new Error("There is no ManagerId.");
+            }
+      const savedEvent = await this._offerRepo.fetchManagerWalletRepo(managerId);
+      return {success:savedEvent.success,message:savedEvent.message,data:savedEvent.data};
+    } catch (error) {
+      console.error("Error in cancelling the booked Event:", error);
+      throw new Error("Failed to cancell the booked Event"); 
+    }
+
+}
 
 
 

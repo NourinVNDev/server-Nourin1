@@ -1,6 +1,6 @@
 import app from "./app";
 import dotenv from 'dotenv';
-// import initializeSocket from "./config/Sockets/commentSocket";
+import initializeSocket from "./sockets/commentSocket";
 
 
 dotenv.config();
@@ -11,4 +11,4 @@ const server = app.listen(PORT, () => {
   console.log(`PORT is Running http://localhost:${PORT}`);
 });
 
-// const socket = initializeSocket(server);
+const socket = initializeSocket(server);

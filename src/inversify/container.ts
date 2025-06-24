@@ -52,7 +52,7 @@ import { IAdminOfferRepo } from "../interfaces/adminInterfaces/repositoryInterfa
 import { AdminOfferRepository } from "../repositories/adminRepository/adminOfferRepository";
 import { AdminOfferController } from "../controllers/adminControllers/offerController";
 import { IManagerLoginService } from "../interfaces/managerInterfaces/serviceInterfaces/IManagerLoginService";
-import { ManagerLoginService } from "../services/managerServices/ManagerloginService";
+import { ManagerLoginService } from "../services/managerServices/managerloginService";
 import { IManagerLoginRepo } from "../interfaces/managerInterfaces/repositoryInterfaces/IManagerLoginRepo";
 import { ManagerLoginRepository } from "../repositories/managerRepository/managerLoginRepository";
 import { ManagerLoginController } from "../controllers/managerControllers/loginController";
@@ -66,6 +66,16 @@ import { ManagerOfferService } from "../services/managerServices/managerOfferSer
 import { IManagerOfferRepo } from "../interfaces/managerInterfaces/repositoryInterfaces/IManagerOfferRepo";
 import { ManagerOfferRepository } from "../repositories/managerRepository/managerOfferRepository";
 import { ManagerOfferController } from "../controllers/managerControllers/offerController";
+import { IBookingDetailsService } from "../interfaces/managerInterfaces/serviceInterfaces/IBookingDetailsService";
+import { BookingDetailsService } from "../services/managerServices/bookingDetailsService";
+import { IBookingDetailsRepo } from "../interfaces/managerInterfaces/repositoryInterfaces/IBookingDetailsRepo";
+import { BookingDetailsRepository } from "../repositories/managerRepository/bookingDetailsRepository";
+import { BookingDetailsController } from "../controllers/managerControllers/bookingDetailsController";
+import { IVerifierDetailsService } from "../interfaces/managerInterfaces/serviceInterfaces/IVerifierDetailsService";
+import { VerifierDetailsService } from "../services/managerServices/verifierDetailsService";
+import { IVerifierDetailsRepo } from "../interfaces/managerInterfaces/repositoryInterfaces/IVerifierDetailsRepo";
+import { VerifierDetailsRepository } from "../repositories/managerRepository/verifierDetailsRepository";
+import { VerifierDetailsController } from "../controllers/managerControllers/verifierDetailsController";
 //user
 container.bind<IUserLoginService>(TYPES.IUserLoginService).to(UserLoginService);
 container.bind<IUserLoginRepo>(TYPES.IUserLoginRepo).to(UserLoginRepository);
@@ -121,6 +131,14 @@ container.bind<ManagerEventController>(ManagerEventController).toSelf();
 container.bind<IManagerOfferService>(TYPES.IManagerOfferService).to(ManagerOfferService);
 container.bind<IManagerOfferRepo>(TYPES.IManagerOfferRepo).to(ManagerOfferRepository);
 container.bind<ManagerOfferController>(ManagerOfferController).toSelf();
+
+container.bind<IBookingDetailsService>(TYPES.IBookingDetailsService).to(BookingDetailsService);
+container.bind<IBookingDetailsRepo>(TYPES.IBookingDetailsRepo).to(BookingDetailsRepository);
+container.bind<BookingDetailsController>(BookingDetailsController).toSelf();
+
+container.bind<IVerifierDetailsService>(TYPES.IVerifierDetailsService).to(VerifierDetailsService);
+container.bind<IVerifierDetailsRepo>(TYPES.IVerifierDetailsRepo).to(VerifierDetailsRepository);
+container.bind<VerifierDetailsController>(VerifierDetailsController).toSelf();
 
 
 

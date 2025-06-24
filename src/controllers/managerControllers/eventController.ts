@@ -267,6 +267,23 @@ export class ManagerEventController {
             res.status(HTTP_statusCode.InternalServerError).json({ error: response_message.CREATEEVENTPOST_ERROR });
         }
     }
+        async updateSeatInformation(req:Request,res:Response){
+            try {
+              console.log("Req body:",req.body);
+              
+              const TicketData= req.body;
+              console.log("your companyNames:",TicketData);
+      
+              const result = await this._eventService.postSeatInformationService(TicketData);
+              res.status(200).json(result);
+          } catch (error) {
+              console.error("Error while checking manager status:", error);
+              res.status(500).json({
+                  success: false,
+                  error: response_message.ADMINLOGIN_ERROR
+              });
+          }
+          }
 
 
 }

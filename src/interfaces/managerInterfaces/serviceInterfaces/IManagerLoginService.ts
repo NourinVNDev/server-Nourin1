@@ -17,6 +17,9 @@ export interface IManagerLoginService{
                                                        getDashboardGraphService(managerId:string,selectedType:string,selectedTime:string):Promise<{success:boolean,message:string,data:any}>;
                                                           getDashboardPieChartService(managerId:string):Promise<{success:boolean,message:string,data:any}>;
                                                             getDashboardBarChartService(selectedEvent:string):Promise<{success:boolean,message:string,data:any}>;
+                                                               NotificationCountOfManagerService(managerId:string):Promise<{success:boolean,message:string,data:any}>;
+                                                                  checkValidDate(eventName:string):Promise<{success:boolean,message:string,data:any}>;
+                                                                     fetchEventNameService(managerId:string):Promise<{success:boolean,message:string,data:any}>;
 
 
 

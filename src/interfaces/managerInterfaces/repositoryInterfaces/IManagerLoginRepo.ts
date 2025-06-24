@@ -17,5 +17,9 @@ export interface IManagerLoginRepo{
                                  fetchDashboardGraphRepo(managerId:string,selectedType:string,selectedTime:string):Promise<{success:boolean,message:string,data?:any}>
                                      fetchDashboardPieChartRepo(managerId:string):Promise<{success:boolean,message:string,data?:any}>
                                          fetchDashboardBarChartRepo(selectedEvent:string):Promise<{success:boolean,message:string,data?:any}>
+                                             fetchManagerNotificationCountRepo(managerId:string):Promise<{success:boolean,message:string,data?:any|null}>
+                                                 checkValidDateRepo(eventName:string):Promise<{success:boolean,message:string,data?:any|null}>
+                                                     fetchEventNamesRepo(managerId:string):Promise<{success:boolean,message:string,data?:any|null}>
+                                                     
 
 }

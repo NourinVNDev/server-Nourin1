@@ -2,7 +2,7 @@ import { inject, injectable } from "inversify";
 import TYPES from "../../inversify/types";
 import { IManagerEventRepo } from "../../interfaces/managerInterfaces/repositoryInterfaces/IManagerEventRepo";
 import { IManagerEventService } from "../../interfaces/managerInterfaces/serviceInterfaces/IManagerEventService";
-import { EventData, eventLocation, EventSeatDetails } from "../../dtos/user.dto";
+import { EventData, eventLocation, EventSeatDetails, TicketType } from "../../dtos/user.dto";
 import { uploadToCloudinary } from "../../config/cloudinary.config";
 import { getCoordinates } from "../../utils/getCoordinates.util";
 import SOCIALEVENTDB from "../../models/managerModels/socialEventSchema";
@@ -148,6 +148,23 @@ async getSelectedEventTicketService(id:string){
         console.error("Error in updateEventPostService:", error);
         return { success: false, message: "Failed to process event data in service layer." };
     }
+}
+async postSeatInformationService(ticketData:TicketType){
+  const verifierData = await this._eventRepo.updateSeatInformationRepo(ticketData); 
+
+  if (verifierData.success) {
+      return {
+          success: verifierData.success,
+          message: verifierData.message,
+          data: verifierData.data
+      };
+  } else {
+      return {
+          success: false,
+          message: verifierData.message,
+          data: verifierData.data
+      };
+  }
 }
   
 

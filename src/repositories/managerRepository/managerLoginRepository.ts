@@ -6,6 +6,7 @@ import NOTIFICATIONDB from "../../models/userModels/notificationSchema";
 import USERDB from "../../models/userModels/userSchema";
 import SOCIALEVENTDB from "../../models/managerModels/socialEventSchema";
 import BOOKINGDB from "../../models/userModels/bookingSchema";
+import { EventDetails } from "../../dtos/user.dto";
 const monthMap = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 interface User {
     email: string;
@@ -635,6 +636,110 @@ for (let i = 0; i < 7; i++) {
     };
   }
 }
+async fetchManagerNotificationCountRepo(managerId: string) {
+  try {
+    const notificationCount = await NOTIFICATIONDB.countDocuments({
+      to: managerId,
+      isRead: false
+    });
+    console.log("Notification:",notificationCount);
+
+    const totalNotificationCount=notificationCount
+    // +categoryNotificationCount;
+    console.log("Total Count of Notificaton in manager side",totalNotificationCount);
+    return {
+      success: true,
+      message: "Notification counts fetched successfully",
+      data: 
+   totalNotificationCount
+    };
+  } catch (error) {
+    console.error("Error in updating notification:", error);
+    return {
+      success: false,
+      message: "Internal server error"
+    };
+  }
+}
+
+async  checkValidDateRepo(eventName: string) {
+  try {
+    console.log("Event Name from repo", eventName);
+
+    const event: EventDetails | null = await SOCIALEVENTDB.findOne({ eventName });
+
+    if (!event) {
+      return {
+        success: false,
+        message: "Event not found",
+      };
+    }
+
+    const now = new Date();
+
+    const start = new Date(event.startDate);
+    const end = new Date(event.endDate);
+    start.setHours(0, 0, 0, 0);
+    end.setHours(23, 59, 59, 999);
+
+    const isDateInRange = now >= start && now <= end;
+
+    const [hours, minutes] = event.time.split(":").map(Number);
+    const eventStartDateTime = new Date(event.startDate);
+    eventStartDateTime.setHours(hours, minutes, 0, 0);
+
+    const earliestEntryTime = new Date(eventStartDateTime.getTime() - 10 * 60000);
+    const isEntryAllowed = now >= earliestEntryTime;
+
+    if (!isDateInRange) {
+      return {
+        success: false,
+        message: "Today's date is not within the event's valid date range",
+      };
+    }
+
+    if (!isEntryAllowed) {
+      return {
+        success: false,
+        message: "You can only enter starting from 10 minutes before the event starts",
+      };
+    }
+
+    return {
+      success: true,
+      message: "Date and time are valid for entry",
+    };
+
+  } catch (error) {
+    console.error("Error in checking Date for video call:", error);
+    return {
+      success: false,
+      message: "Internal server error",
+    };
+  }
+}
+async fetchEventNamesRepo(managerId: string) {
+  try {
+    const socialEvents = await SOCIALEVENTDB.find({ Manager: managerId });
+    const eventNames = socialEvents.map((event: any) => event.eventName);
+    console.log("EventNames103",eventNames);
+    
+
+    return {
+      success: true,
+      message: "Fetched event names successfully",
+      data: eventNames,
+    };
+  } catch (error) {
+    console.error("Error fetching event names:", error);
+    return {
+      success: false,
+      message: "Failed to fetch event names",
+      error,
+    };
+  }
+}
+
 
 
 

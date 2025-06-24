@@ -1,7 +1,7 @@
 import { injectable } from "inversify";
 import { IUserProfileRepo } from "../../interfaces/userInterfaces/repositoryInterfaces/IUserProfileRepo";
 import mongoose from "mongoose";
-import REVIEWRATINGDB from "../../models/userModels/reviewRatingSchema";
+import REVIEWRATINGDB from "../../models/userModels/reveiwRatingSchema";
 import { FormData } from "../../dtos/user.dto";
 import BOOKEDUSERDB from "../../models/userModels/bookingSchema";
 import SOCIALEVENTDB from "../../models/managerModels/socialEventSchema";

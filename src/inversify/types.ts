@@ -42,6 +42,16 @@ const TYPES = {
   IManagerOfferService:Symbol.for('IManagerOfferService'),
   IManagerOfferRepo:Symbol.for('IManagerOfferRepo'),
 
+  IBookingDetailsService:Symbol.for('IBookingDetailsService'),
+  IBookingDetailsRepo:Symbol.for('IBookingDetailsRepo'),
+
+  IVerifierDetailsService:Symbol.for('IVerifierDetailsService'),
+  IVerifierDetailsRepo:Symbol.for('IVerifierDetailsRepo'),
+
+  
+
+
+
 
 
 };

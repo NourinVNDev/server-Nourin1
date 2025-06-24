@@ -4,6 +4,7 @@ import MANAGEROFFERDB from "../../models/managerModels/managerOfferSchema";
 import SOCIALEVENTDB from "../../models/managerModels/socialEventSchema";
 import OFFERDB from "../../models/adminModels/adminOfferSchema";
 import CATEGORYDB from "../../models/adminModels/adminCategorySchema";
+import MANAGERWALLETDB from "../../models/managerModels/managerWalletSchema";
 export class ManagerOfferRepository implements IManagerOfferRepo{
       async getAllOfferRepo(managerId:string): Promise<{ success: boolean; message: string; data?: any }> {
     try {
@@ -185,6 +186,24 @@ async updateOfferDetailsRepo(formData:OfferData): Promise<{ success: boolean; me
                console.error("Error in getEventTypeDataService:", error);
                return { success: false, message: "Internal server error" };
            }
+}
+async fetchManagerWalletRepo(managerId:string){
+  try{
+        const managerWallet=await MANAGERWALLETDB.findOne({managerId:managerId}).populate('managerId');
+        console.log(managerWallet)
+        return {
+          success: true,
+          message: "Retrive Manager Wallet successfully",
+          data: managerWallet,
+        };
+      } catch (error) {
+        console.error("Error canceling event:", error);
+        return {
+          success: false,
+          message: "Error occurred during canceling event",
+          data: null,
+        };
+      }
 }
 
 

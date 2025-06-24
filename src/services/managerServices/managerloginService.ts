@@ -255,6 +255,34 @@ async getDashboardBarChartService(selectedEvent:string){
     throw new Error("Failed to fetching Manager Dashboard"); 
   }
 }
+async NotificationCountOfManagerService(managerId:string){
+  try {
+    const savedEvent = await this._managerLoginRepo.fetchManagerNotificationCountRepo(managerId);
+    return {success:savedEvent.success,message:savedEvent.message,data:savedEvent.data};
+  } catch (error) {
+    console.error("Error in fetching Notification:", error);
+    throw new Error("Failed to fetching notification of user"); 
+  }
+}
+async checkValidDate(eventName:string){
+    try {
+    const savedEvent = await this._managerLoginRepo.checkValidDateRepo(eventName);
+    return {success:savedEvent.success,message:savedEvent.message,data:savedEvent.data};
+  } catch (error) {
+    console.error("Error in fetching Notification:", error);
+    throw new Error("Failed to fetching notification of user"); 
+  }
+}
+async fetchEventNameService(managerId:string){
+      try {
+    const savedEvent = await this._managerLoginRepo.fetchEventNamesRepo(managerId);
+    return {success:savedEvent.success,message:savedEvent.message,data:savedEvent.data};
+  } catch (error) {
+    console.error("Error in fetching Notification:", error);
+    throw new Error("Failed to fetching notification of user"); 
+  }
+}
+
 
 
 

@@ -507,6 +507,63 @@ export class ManagerLoginController{
               });
             }
           }
+            async fetchNotificationCount(req:Request,res:Response){
+            try{
+            const managerId=req.params.managerId;
+  
+            console.log("Chech the managerId",managerId);
+        
+            const savedEvent = await this._managerLoginService.NotificationCountOfManagerService(managerId);
+            if(savedEvent.success){
+              res.status(HTTP_statusCode.OK).json({ success: savedEvent.success, message: savedEvent.message, data: savedEvent.data });
+              return;
+              }
+               res.status(HTTP_statusCode.OK).json({ success: savedEvent.success, message: savedEvent.message, data: savedEvent.data });
+          } catch (error) {
+            console.error("Error in check User Notification:", error);
+            res.status(HTTP_statusCode.InternalServerError).json({ success: false, message: response_message.FETCHADMINDASHBOARDDATA_ERROR});
+            
+          }
+          }
+              async checkDateValidation(req:Request,res:Response){
+            try{
+            
+              const eventName=req.query.name;
+              console.log("Maankind",eventName);
+            const savedEvent = await this._managerLoginService.checkValidDate(eventName as string);
+            console.log('SavedEvent of manager video call',savedEvent);
+            if(savedEvent.success){
+              res.status(HTTP_statusCode.OK).json({ success: savedEvent.success, message: savedEvent.message, data: savedEvent.data });
+              return;
+              }
+               res.status(HTTP_statusCode.OK).json({ success: savedEvent.success, message: savedEvent.message, data: savedEvent.data });
+          } catch (error) {
+            console.error("Error in check User Notification:", error);
+            res.status(HTTP_statusCode.InternalServerError).json({ success: false, message: response_message.FETCHADMINDASHBOARDDATA_ERROR});
+            
+          }
+          }
+            async fetchEventNames(req:Request,res:Response){
+                try{
+            
+              const managerId=req.params.managerId;
+              console.log("ManagerId",managerId);
+            const savedEvent = await this._managerLoginService.fetchEventNameService(managerId);
+            console.log('SavedEvent of manager video call',savedEvent);
+            if(savedEvent.success){
+              res.status(HTTP_statusCode.OK).json({ success: savedEvent.success, message: savedEvent.message, data: savedEvent.data });
+              return;
+              }
+               res.status(HTTP_statusCode.OK).json({ success: savedEvent.success, message: savedEvent.message, data: savedEvent.data });
+          } catch (error) {
+            console.error("Error in check User Notification:", error);
+            res.status(HTTP_statusCode.InternalServerError).json({ success: false, message: response_message.FETCHADMINDASHBOARDDATA_ERROR});
+            
+          }
+          }
+       
+
+
 
 
 }

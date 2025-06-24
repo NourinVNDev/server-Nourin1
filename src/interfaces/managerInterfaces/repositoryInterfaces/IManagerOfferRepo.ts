@@ -6,6 +6,7 @@ export interface IManagerOfferRepo{
               getSelectedOfferRepo(offerId:string,managerId:string):Promise<{ success: boolean; message: string; data?: any }>
                   updateOfferDetailsRepo(formData:OfferData):Promise<{ success: boolean; message: string; data?: any }>
                   getSearchOfferInputRepo(searchData:string):Promise<{ success: boolean; message: string; data?: any }>
+                      fetchManagerWalletRepo(managerId:string):Promise<{success:boolean,message:string,data:any}>
           
 
 }

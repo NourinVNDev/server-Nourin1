@@ -1,4 +1,4 @@
-import { EventData, eventLocation, EventSeatDetails } from "../../dtos/user.dto";
+import { EventData, eventLocation, EventSeatDetails, TicketType } from "../../dtos/user.dto";
 import { IManagerEventRepo } from "../../interfaces/managerInterfaces/repositoryInterfaces/IManagerEventRepo";
 import SOCIALEVENTDB from "../../models/managerModels/socialEventSchema";
 import MANAGERDB from "../../models/managerModels/managerSchema";
@@ -269,6 +269,47 @@ async getSelectedEventTicketRepo(id:string){
           return { success: false, message: "Failed to update event data." ,data:[]};
         }
   }
+
+async updateSeatInformationRepo(ticketData: TicketType): Promise<{ success: boolean; message: string; data?: any }> {
+  try {
+    const socialEvent = await SOCIALEVENTDB.findById(ticketData.id);
+
+    if (!socialEvent) {
+      console.log("Social event not found");
+      return {
+        success: false,
+        message: "Social event not found",
+      };
+    }
+
+    socialEvent.typesOfTickets.forEach((event: any) => {
+      if (event.id === ticketData._id) {
+        event.type = ticketData.type;
+        event.noOfSeats = ticketData.noOfSeats;
+        event.Amount = ticketData.Amount;
+        event.Included = ticketData.Included;
+        event.notIncluded = ticketData.notIncluded;
+      }
+    });
+
+    await socialEvent.save();
+    console.log("Updated social event:", socialEvent);
+
+    return {
+      success: true,
+      message: "Event Seat Updated Successfully",
+      data: socialEvent.typesOfTickets,
+    };
+  } catch (error) {
+    console.error("Error in updateSeatInformationRepo:", error);
+    return {
+      success: false,
+      message: "Internal server error",
+    };
+  }
+}
+
+  
    
 
 
